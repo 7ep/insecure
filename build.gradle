@@ -48,13 +48,10 @@ gretty {
 
 sonarqube {
     properties {
-        property "sonar.projectName", "demo"
-        property "sonar.projectDescription", "A demonstration of a web application with good test coverage and best practices"
+        property "sonar.projectName", "insecure_webapp"
+        property "sonar.projectDescription", "A demonstration of an insecure web application, by OWASP"
         property "sonar.sources", "src/main/java"
-        property "sonar.tests", "src/test/java,src/integration_test/java,src/bdd_test/java"
         property "sonar.java.binaries", "build/classes/java/main"
-        property "sonar.junit.reportPaths", "build/test-results/test/,build/test-results/fastIntegrationTest"
-        property "sonar.jacoco.reportPaths", "build/jacoco/test.exec,build/jacoco/fastIntegrationTest.exec"
     }
 }
 
