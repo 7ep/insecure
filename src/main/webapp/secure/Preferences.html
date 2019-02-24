@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- 
+These JSP pages have been simplified for demonstration purposes 
+and do not represent a real production implementation - 
+For example, production systems typically use tag libraries and a third-party MVC architecture (see Spring Framework,Tapestry,WebWork,Struts,JSF,JSTL). 
+Original author L.Angrave. 
+Copyright 2005 Isthmus Group LLC, Madison Wisconsin.
+Licensed under the Apache License 2.0, 
+http://www.apache.org/licenses/LICENSE-2.0
+-->
+
+
+<html>
+<head>
+<meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="No-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="0">
+<link rel="stylesheet" type="text/css" href="../common/theme/style.css">
+<link rel="stylesheet" type="text/css" href="../common/theme/form.css">
+<script type="text/javascript">
+function updatePreferences() {
+	var styleSelect= document.getElementById("styleSelect");  
+	var greetingSelect = document.getElementById("greetingSelect"); 
+	
+	var date = new Date();
+	date.setTime(date.getTime()+(100*24*60*60*1000)); // 100 days from now
+	if(styleSelect.selectedIndex>0) {
+		document.cookie ='style=' + styleSelect.value + '; expires='+ date.toGMTString() + '; path=/';
+	}
+	if(greetingSelect.selectedIndex>0) {
+		document.cookie ='greeting=' + greetingSelect.value + '; expires='+ date.toGMTString() + '; path=/';
+	}
+	
+	alert("Preferences changed. Changes take effect when you login in again");
+}
+</script>
+</head>
+<body>
+<form action="#" id="preferencesForm">
+<table class="formPanel">
+<tr class="formHeading"><td colspan=2>&gt;&nbsp;Display Preferences</td></tr>
+<tr class="formPanel"><th class="formPanel">Style:</th>
+<td class="formPanel">
+<select name="style" id="styleSelect"><option>Select ...</option><option value="modern">Modern</option><option value="plain">Plain</option></select>
+</td></tr>
+<tr class="formPanel"><th class="formPanel">Greeting</th>
+<td class="formPanel">
+<select name="greeting" id="greetingSelect"><option>Select ...</option><option>Hello</option>
+<option>Currently Logged in as</option>
+<option>Hi</option>
+<option>Bonjour</option>
+</select>
+</td></tr>
+<tr>
+<td class="formPanel"><button onclick="updatePreferences();window.close()">Update</button></td></tr>
+</table>
+</form>
+ 
+</body>
+</html>

@@ -1,0 +1,29 @@
+<Context className="org.apache.catalina.core.StandardContext" 
+	cachingAllowed="true" 
+	charsetMapperClass="org.apache.catalina.util.CharsetMapper" 
+	cookies="true" 
+	crossContext="false" 
+	debug="0" 
+	displayName="InsecureWebApp" 
+	docBase="insecure.war" 
+	mapperClass="org.apache.catalina.core.StandardContextMapper" 
+	path="/insecure" 
+	privileged="false" 
+	reloadable="true" 
+	swallowOutput="false" 
+	useNaming="true" 
+	wrapperClass="org.apache.catalina.core.StandardWrapper">
+
+  <Resource name="jdbc/asdb" auth="Container" scope="Shareable" type="javax.sql.DataSource"/>
+  <ResourceParams name="jdbc/asdb">
+	<parameter><name>driverClassName</name><value>org.gjt.mm.mysql.Driver</value></parameter>
+	<parameter><name>factory</name><value>org.apache.commons.dbcp.BasicDataSourceFactory</value></parameter>
+	<parameter><name>maxActive</name><value>15</value></parameter>
+	<parameter><name>maxIdle</name><value>5</value></parameter>
+	<parameter><name>maxWait</name><value>5000</value></parameter>
+	<parameter><name>url</name><value>jdbc:mysql://localhost/asdb</value></parameter>
+	<parameter><name>username</name><value>asweb</value></parameter>
+	<parameter><name>password</name><value>asweb</value></parameter>
+  </ResourceParams>
+
+</Context>

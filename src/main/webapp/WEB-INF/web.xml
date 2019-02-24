@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <servlet>
+    <servlet-name>ResetDatabaseServlet</servlet-name>
+    <display-name>Reset Database Servlet</display-name>
+    <servlet-class>asc.reset.ResetDatabaseServlet</servlet-class>
+    <init-param><param-name>user</param-name><param-value>admin</param-value></init-param>
+    <init-param><param-name>pass</param-name><param-value>f0dg1kr0l</param-value></init-param>
+    <load-on-startup>100</load-on-startup>
+  </servlet>
+  
+    <servlet>
+    <servlet-name>ReportServlet</servlet-name>
+    <display-name>ReportServlet</display-name>
+    <servlet-class>asc.ReportServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ReportServlet</servlet-name>
+    <url-pattern>/report/*</url-pattern>
+  </servlet-mapping>
+  	
+  <servlet-mapping>
+    <servlet-name>ResetDatabaseServlet</servlet-name>
+    <url-pattern>/reset</url-pattern>
+  </servlet-mapping>
+	
+
+<resource-ref>
+  <description>The database pool</description>
+  <res-ref-name>jdbc/asdb</res-ref-name>
+  <res-type>javax.sql.DataSource</res-type>
+  <res-auth>Container</res-auth>
+</resource-ref>
+  
+</web-app>

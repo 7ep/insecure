@@ -1,0 +1,9 @@
+# ignore the gradle build directory
+build/
+
+# ignore Intellij's output directory and configuration
+out/
+.idea/
+
+# ignore gradle's work directory
+.gradle

@@ -1,0 +1,145 @@
+<html><head></head><body><pre>
+
+<b>InsecureWebApp</b> - an OWASP web application
+
+<a href="mailto:insecure@isthmusgroup.com?subject=InsecureWebApp"><img style="border:0px" src="../common/art/isthmusgroup.gif" width="78" height="72" vspace="6"></a>
+Version 1.0
+
+<b>NOTICE</b>
+InsecureWebApp should be used in secure, local testing environments only.
+InsecureWebApp should NOT BE deployed in a public or production environment because this web application 
+contains vulnerabilities that could potentially be used to cause harm and/or disclose or alter information.
+Please see the end of this file for licensing and copyright information
+
+<b>About InsecureWebApp</b>
+The purpose of InsecureWebApp is to demonstrate why vulnerabilities in web applications can cause harm 
+and to help developers create more secure applications by understanding how theoretical vulnerabilities 
+relate to actual code or deployment configuration and how to fix them.
+
+InsecureWebApp is a database driven J2EE web application for a ficticious company 'American Services Corporation'.
+
+Though small, it demonstrates a variety of web application vulnerabilities including
+SQL Injection, HTML Injection (XSS, Reflected XSS), Parameter Tampering, Broken Authentication and Authorization.
+
+<b>Requirements</b>
+
+InsecureWebApp has been developed and tested using a 'typical Java platform' for a small enterprise.
+The minimum recommended configuration is - 
+Apache Tomcat 4.1.31 with Sun's Java 1.4.2_06
+
+InsecureWebApp uses an in-memory (HSQL) database however other datasources are possible. 
+
+InsecureWebApp is available as a deployable .war file, Eclipse source code project or embedded in Tomcat.
+
+InsecureWebApp should be used in a development system only.
+
+
+<b>Application Installation Steps:</b>
+
+1. Copy insecure.war file to tomcat's webapp directory
+
+2. Start Tomcat then use sqltest.jsp to test Tomcat's database connection.
+<a href="http://localhost:8080/insecure/secure/sqltest.jsp" target="_blank">sqltest.jsp</a>
+You should see a list of users and passwords that you can use to login into the application.
+Note the application's database tables are reset to the initial values each time the application is started.
+
+3. Login to the application
+<a href="http://localhost:8080/insecure/public/Login.jsp" target="_blank">Login</a>
+
+<hr><b>Overview of the application</b>
+1. Login as asmith(password- andy), bmoody(beth) and admin(secret). 
+Notice that the admin user has additional privileges which can be accessed by clicking on the admin link on the left.
+This application implements six use-cases:
+1. View account status and Active or Deactivate the account (requires authenticated user with admin rights)
+2. View an internal pdf report (requires authenticated user with admin rights)
+3. View current account balance summaries and a detail for each account
+4. Request a new credit card payment (requires authenticated user)
+5. Request a new password via email
+6. Lists latest products with a simple search on the name (does not require login)
+In addition, an authenticated user can personalize the web site style. Database tables are recreated each time the application initializes.
+
+<b>Challenge #1 - Penetration Test</b>
+How many examples of SQL injection and parameter tampering can you find in the app in ten minutes?
+
+Using only the use-cases (and without looking at the source-code) see how many vulnerabilities you can find in 10 minutes (or if you have the time, 30 minutes).
+Use a texteditor to jot down each vulnerability you find eg the URL and what kind of vulnerability you found.
+
+<b>Challenge #2 - Servlet source code review</b>
+The application uses a custom servlet (ReportServlet) to render reports.
+1. Verify that <a href="http://localhost:8080/insecure/report/anything">report/anything</a> is served by the same servlet.
+2. Try to use the servlet to serve "web.xml", why doesn't the following link work?
+<a href="http://localhost:8080/insecure/report/../web.xml" target="_blank">http://localhost:8080/insecure/report/../web.xml</a>
+3. Read the source code to <a href="source/ReportServlet.java" target="_blank">ReportServlet</a> and then add one character to the above line to make it work.
+4. Once you have web.xml, determine the JNDI name of the database connection and the (fake) user and password used.
+5. Would you have spotted this vulnerability by a typical analysis of the source code? Why?
+
+<b>Challenge #3 - Forceful Browsing and Parameter Tampering</b>
+1. Can one customer view another customer's records?
+2. What would be a minimum fix and what be good fix?
+
+<b>Challenge #4 - Information Disclosure</b>
+Developer tools often create old versions of a web page with a different extension. Perhaps Login.bak, Login.jsp.1 made it into production...
+<a href="http://localhost:8080/insecure/public/Login.jsp.1" target="_blank">Login.jsp.1</a>
+By analyzing the source code of this web page, determine
+1. How cookie information is pushed into the session object
+2. How authentication is implemented in this application
+3. The directory structure of any included web pages.
+4. The full name of custom java classes used for the authentication process.
+5. What would be a minimum fix and what be good fix?
+
+<b>Challenge #5 - Permanent Cross Site Scripting</b>
+1. Find a page that is vulnerable to cross site scripting (XSS)
+2. Demonstrate that the page is vulnerable by generating an alert (&lt;script&gt;alert(this)&lt;script&gt;)
+3. Use XSS to change the user preference's saluation cookie.
+4. How could you use this to automatically inject malacious code into every secure page?
+5. What would be a minimum fix and what be good fix?
+
+<b>Challenge #6 - Permanent Cross Site Scripting</b>
+1. Use SQL injection to inject javascript into every secure page.
+2. What would be a minimum fix and what be good fix?
+
+<b>Challenge #7 - Source code review</b>
+<a href="http://localhost:8080/insecure/javasrc.zip" target="_blank">Source code(zip)</a>
+
+1. Use SQL injection to inject javascript into every secure page.
+2. What would be a minimum fix and what be good fix?
+
+<hr>
+<b>MySQL-Specific Installation</b>
+
+To use mysql, additional setup is required (see below). 
+
+1. Create the mysql user and database:
+mysql -uroot -p
+ CREATE DATABASE asdb;
+ GRANT ALL PRIVILEGES ON asdb.* TO 'asweb'@'localhost' IDENTIFIED BY 'asweb';
+ FLUSH PRIVILEGES;
+ exit;
+ 
+2. Test the new database and user:
+ mysqldump -uasweb -pasweb asdb 
+(This should dump the empty asdb database to the console output)
+
+3. Check that you have the mysql jdbc <a href='http://dev.mysql.com/downloads/connector/j/'>driver</a> installed in tomcat/common/lib
+
+4. Copy insecure.xml to Tomcat's webapp directory
+<a href="insecure.xml" target="_blank">insecure.xml</a>
+
+The application will attempt to connect to the datasource first and will fall back to the default HSQL implementation if the connection fails.
+Please the tomcat logs for details.
+
+
+<hr>
+
+Copyright 2005 Isthmus Group LLC, Madison Wisconsin
+Original concept and development by Lawrence Angrave.
+Licensed under the Apache License, Version 2.0 (the "License");
+You may not use this work except in compliance with the License. 
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+either express or implied. See the License for the specific language governing 
+permissions and limitations under the License.
+
+
+</pre></body></html>

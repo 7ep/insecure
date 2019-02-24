@@ -1,0 +1,50 @@
+body {
+	background-color: gray;
+	margin: 4px;
+	font-size: 100px;
+}
+
+td {
+	vertical-align: top;	
+}
+
+
+.pageTable {
+	background-color: black	;
+	min-width: 1000px;
+	width: 100%;
+	min-height: 400px;
+	padding: 0px;
+}
+
+TR.pageTopTR {
+	height: 30px;
+	
+}
+
+TD.pageTopTD {
+	background-color: #000080;
+	font-size: 65px;
+	color: white;
+	text-align: center;
+	font-family: sans-serif;
+	font-style: italic;
+}
+
+.pageTR {
+}
+
+.pageSideBarTD {
+	background-color: white;
+	width: 135px;
+	vertical-align: top;
+}
+
+.pageMainTD {
+	background-color: #f0f0f0;
+}
+.sideBarlink {
+	font-family: serif;
+	font-size: 9px;
+}
+

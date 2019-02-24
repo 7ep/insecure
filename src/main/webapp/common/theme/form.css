@@ -1,0 +1,22 @@
+th {
+	
+}
+table.formPanel {
+	background-color: #ffffff;
+	border: 1px;
+	width: 400px;
+}
+tr.formPanel {
+}
+td.formPanel {
+}
+.formHeading {
+	font-size: 15px;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+textarea {
+	width: 100%;
+}
