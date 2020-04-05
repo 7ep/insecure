@@ -2,7 +2,7 @@
 plugins {
     id 'war'
 
-    id "com.bmuschko.tomcat" version "2.5"
+    id "org.gretty" version "3.0.2"
 
     // scans our code for static analysis
     id "org.sonarqube" version "2.6.2"
@@ -10,7 +10,7 @@ plugins {
     // Dependency Check analyzes the dependencies for 
     // potential security issues.
     // see https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "5.2.0"
+    id "org.owasp.dependencycheck" version "5.3.2"
 }
 
 // sets the version of Java we want to use - 8
@@ -26,17 +26,8 @@ repositories {
 dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
-    def tomcatVersion = '9.0.27'
-        tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-                "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-
 	compile group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
 
-}
-
-tomcat {
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
 
 sonarqube {
@@ -50,9 +41,13 @@ sonarqube {
 
 
 dependencyCheck {
+    // if we don't include the specific configurations to scan, it will scan everything,
+    // which means getting into the dependencies of tomcat and jetty, which should
+    // have no bearing on us.
+    scanConfigurations = ['default']
     showSummary = false
-    autoUpdate = false
-    cveValidForHours = 168 // a week.
+    autoUpdate = true
+    cveValidForHours = 24 * 30 // about a month.
     format = 'HTML' // options are  (HTML, XML, CSV, JSON, VULN, ALL).
     failBuildOnCVSS = 8 // see https://www.first.org/cvss/specification-document#5-Qualitative-Severity-Rating-Scale
 }
