@@ -11,12 +11,19 @@ plugins {
     // potential security issues.
     // see https://plugins.gradle.org/plugin/org.owasp.dependencycheck
     id "org.owasp.dependencycheck" version "5.3.2"
+
+    // https://blog.gradle.org/java-toolchains
+    // java toolchains - a gradle 6.7 feature - allows us to
+    // specify an exact version of the JDK to use when compiling,
+    // and will pull it down if not found on the user's machine.
+    id "java-library"
 }
 
-// sets the version of Java we want to use - 8
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
 
 repositories {
     jcenter()
