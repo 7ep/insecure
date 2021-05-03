@@ -2,15 +2,15 @@
 plugins {
     id 'war'
 
-    id "org.gretty" version "3.0.2"
+    id "org.gretty" version "3.0.4"
 
     // scans our code for static analysis
-    id "org.sonarqube" version "2.6.2"
+    id "org.sonarqube" version "3.0"
 
     // Dependency Check analyzes the dependencies for 
     // potential security issues.
     // see https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "5.3.2"
+    id "org.owasp.dependencycheck" version "6.1.6"
 
     // https://blog.gradle.org/java-toolchains
     // java toolchains - a gradle 6.7 feature - allows us to
